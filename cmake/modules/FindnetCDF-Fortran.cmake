@@ -28,11 +28,20 @@ endif()
 
 # else
 # Use nf-config
-find_program(
-  NETCDF-FORTRAN_PROGRAM
-  nf-config
-  QUIET
-)
+if(DEFINED FVCOM_EXTENAL_BINARY_PATH)
+  find_program(
+    NETCDF-FORTRAN_PROGRAM
+    nf-config
+    ${FVCOM_EXTENAL_BINARY_PATH}
+    QUIET
+  )
+else()
+  find_program(
+    NETCDF-FORTRAN_PROGRAM
+    nf-config
+    QUIET
+  )
+endif()
 
 if(${NETCDF-FORTRAN_PROGRAM} MATCHES "-NOTFOUND$")
   message(STATUS "No nf-config found")
@@ -46,7 +55,7 @@ else()
   execute_process(COMMAND ${NETCDF-FORTRAN_PROGRAM} --has-nc4 OUTPUT_STRIP_TRAILING_WHITESPACE OUTPUT_VARIABLE netCDF-Fortran_NC4_YES)
 
   # check for large file support
-  message("netCDF-Fortran_INCLUDE_DIR: ${netCDF-Fortran_INCLUDE_DIR}")
+  message(STATUS "Found netCDF-Fortran_INCLUDE_DIR: ${netCDF-Fortran_INCLUDE_DIR}")
   find_file(netCDF-Fortran_INCLUDE_FILE netcdf.inc ${netCDF-Fortran_INCLUDE_DIR})
   file(READ ${netCDF-Fortran_INCLUDE_FILE} netCDF-Fortran_INCLUDE_FILE_STR)
   string(FIND "${netCDF-Fortran_INCLUDE_FILE_STR}" "nf_format_64bit_data" netCDF-Fortran_LARGE_FILE_SUPPORT_FOUND)
