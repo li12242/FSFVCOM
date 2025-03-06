@@ -4,6 +4,11 @@
 # Ignored file types include all the files created after compilation         #
 ##############################################################################
 
+# folder
+build*
+.vscode
+
+# files
 fvcom
 libfvcom.a
 *.mod

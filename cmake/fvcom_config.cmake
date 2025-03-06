@@ -1,0 +1,307 @@
+################################################################################
+# FVCOM Model Configuration
+################################################################################
+
+# FLAG_1: SELECT FVCOM PRECISION                   
+set(FVCOM_DOUBLE_PRECISION ON CACHE BOOL "ENABLE FVCOM DOUBLE PRECISION")
+
+# if(FVCOM_PRECISION EQUAL "SINGLE")
+#   add_compile_definitions(SINGLE_PRECISION)
+# else()
+#   add_compile_definitions(DOUBLE_PRECISION)
+# endif()
+
+# FLAG_2: SELECT SPHERICAL COORDINATES FOR INTEGRATION
+set(FVCOM_SPHERICAL OFF CACHE BOOL "SELECT SPHERICAL COORDINATES FOR INTEGRATION")
+
+# if(FVCOM_SPHERICAL)
+#   add_compile_definitions(SPHERICAL)
+# endif()
+
+# FLAG_3: INCLUDE WET/DRY TREATMENT OF DOMAIN
+set(FVCOM_WET_DRY ON CACHE BOOL "INCLUDE WET/DRY TREATMENT OF DOMAIN")
+
+# if(FVCOM_WET_DRY)
+#   add_compile_definitions(WET_DRY)
+# endif()
+
+# FLAG_4: ENABLE PARALLELIZATION WITH MPI
+set(FVCOM_MULTIPROCESSOR ON CACHE BOOL "ENABLE PARALLELIZATION WITH MPI")
+
+if(FVCOM_MULTIPROCESSOR)
+  # INCLUDES PARALLELIZATION WITH MPI
+  find_package(MPI REQUIRED COMPONENTS Fortran C)
+  set(MPI_Fortran_COMPILER "mpif90")
+  set(MPI_C_COMPILER "mpicc")
+
+  # add_compile_definitions(MULTIPROCESSOR)
+endif()
+
+# FLAG_5: ENABLE EPA WATER QUALITY MOD
+set(FVCOM_WATER_QUALITY OFF CACHE BOOL "ENABLE EPA WATER QUALITY MOD")
+
+# if(FVCOM_WATER_QUALITY)
+#   add_compile_definitions(WATER_QUALITY)
+# endif()
+
+# FLAG_6: ENABLE the Cartographic projection library
+set(FVCOM_PROJ OFF CACHE BOOL "ENABLE the Cartographic projection library")
+
+# if(FVCOM_PROJ)
+#   add_compile_definitions(PROJ)
+# endif()
+
+# FLAG_7: ENABLE NUDGING BASED DATA ASSIMILATION FOR CURRENT/TEMP/SALINITY/SST
+set(FVCOM_DATA_ASSIM OFF CACHE BOOL "ENABLE NUDGING BASED DATA ASSIMILATION FOR CURRENT/TEMP/SALINITY/SST")
+
+# if(FVCOM_DATA_ASSIM)
+#   add_compile_definitions(DATA_ASSIM)
+# endif()
+
+# FLAG_8: SELECT UPWIND LEAST SQUARE SCHEME
+set(FVCOM_LIMITED "LIMITED_NO" CACHE STRING "SELECT UPWIND LEAST SQUARE SCHEME")
+set_property(
+  CACHE FVCOM_LIMITED
+  PROPERTY STRINGS "LIMITED_NO;LIMITED_1;LIMITED_2")
+
+# if(FVCOM_LIMITED EQUAL "LIMITED_NO")
+#   add_compile_definitions(LIMITED_NO)
+# elseif(FVCOM_LIMITED EQUAL "LIMITED_1")
+#   add_compile_definitions(LIMITED_1)
+# elseif(FVCOM_LIMITED EQUAL "LIMITED_2")
+#   add_compile_definitions(LIMITED_2)
+# endif()
+
+# FLAG_9: ENABLE Semi-Implicit time stepping method
+set(FVCOM_SEMI_IMPLICIT OFF CACHE BOOL "ENABLE Semi-Implicit time stepping method")
+
+# if(FVCOM_SEMI_IMPLICIT)
+#   add_compile_definitions(SEMI_IMPLICIT)
+# endif()
+
+# FLAG_10: SELECT SOLID BOUNDARY TREATMENT
+set(FVCOM_GCN "GCN" CACHE STRING "SELECT SOLID BOUNDARY TREATMENT")
+set_property(
+  CACHE FVCOM_GCN
+  PROPERTY STRINGS
+  "GCN;GCY1;GCY2"
+)
+
+# if(FVCOM_GCN EQUAL "GCN")
+#   add_compile_definitions(GCN)
+# elseif(FVCOM_GCN EQUAL "GCY1")
+#   add_compile_definitions(GCY1)
+# elseif(FVCOM_GCN EQUAL "GCY2")
+#   add_compile_definitions(GCY2)
+# endif()
+
+# FLAG_11: ENABLE GOTM TURBULENCE MODEL INSTEAD OF THE ORIGINAL FVCOM MELLOR-YAMADA 2.5 IMPLEMENTATION
+set(FVCOM_GOTM OFF CACHE BOOL "ENABLE GOTM TURBULENCE MODEL")
+
+# if(FVCOM_GOTM)
+#   add_compile_definitions(GOTM)
+# endif()
+
+# FLAG_12: ENABLE EQUILIBRIUM TIDE
+set(FVCOM_EQUI_TIDE OFF CACHE BOOL "ENABLE EQUILIBRIUM TIDE")
+
+# if(FVCOM_EQUI_TIDE)
+#   add_compile_definitions(EQUI_TIDE)
+# endif()
+
+# FLAG_13: ENABLE ATMOSPHERIC TIDE
+set(FVCOM_ATMO_TIDE OFF CACHE BOOL "ENABLE ATMOSPHERIC TIDE")
+
+# if(FVCOM_ATMO_TIDE)
+#   add_compile_definitions(ATMO_TIDE)
+# endif()
+
+# FLAG_14: ENABLE RIVER DISTRIBUTION OPTION
+set(FVCOM_RIVER_FLOAT OFF CACHE BOOL "ENABLE RIVER DISTRIBUTION OPTION")
+
+# if(FVCOM_RIVER_FLOAT)
+#   add_compile_definitions(RIVER_FLOAT)
+# endif()
+
+# FLAG_44: ENABLE THE TVD SCHEME
+set(FVCOM_TVD OFF CACHE BOOL "ENABLE THE TVD SCHEME")
+
+# if(FVCOM_TVD)
+#   add_compile_definitions(TVD)
+# endif()
+
+# FLAG_15: Using A fully multidimensional positive definite advection transport algorithm with small implicit diffusion. 
+set(FVCOM_MPDATA OFF CACHE BOOL "Using A fully multidimensional positive definite advection transport algorithm")
+
+# if(FVCOM_MPDATA)
+#   add_compile_definitions(MPDATA)
+# endif()
+
+# FLAG_16: Run Two-D Barotropic Mode Only
+set(FVCOM_TWO_D_MODEL OFF CACHE BOOL "Run Two-D Barotropic Mode Only")
+
+# if(FVCOM_TWO_D_MODEL)
+#   add_compile_definitions(TWO_D_MODEL)
+# endif()
+
+# FLAG_17: Output 2-D Momentum Balance Checking
+set(FVCOM_BALANCE_2D OFF CACHE BOOL "Output 2-D Momentum Balance Checking")
+
+# if(FVCOM_BALANCE_2D)
+#   add_compile_definitions(BALANCE_2D)
+# endif()
+
+# FLAG_18: OPEN BOUNDARY FORCING TYPE
+set(FVCOM_MEAN_FLOW OFF CACHE BOOL "ENABLE OPEN BOUNDARY FORCING TYPE: MEAN_FLOW")
+
+# if(FVCOM_MEAN_FLOW)
+#   add_compile_definitions(MEAN_FLOW)
+# endif()
+
+# FLAG_19: OUTPUT TIDAL INFORMATION AT NTIDENODE and NTIDECELL
+set(FVCOM_TIDE_OUTPUT OFF CACHE BOOL "OUTPUT TIDAL INFORMATION AT NTIDENODE and NTIDECELL")
+
+# if(FVCOM_TIDE_OUTPUT)
+#   add_compile_definitions(TIDE_OUTPUT)
+# endif()
+
+# FLAG_20: dye release
+set(FVCOM_DYE_RELEASE OFF CACHE BOOL "ENBALE DYE RELEASE")
+
+# if(FVCOM_DYE_RELEASE)
+#   add_compile_definitions(DYE_RELEASE)
+# endif()
+
+# FLAG_21: ENABLE SUSPENDED SEDIMENT MODEL
+set(FVCOM_SEDIMENT OFF CACHE BOOL "ENABLE SUSPENDED SEDIMENT MODEL")
+
+# if(FVCOM_SEDIMENT)
+#   add_compile_definitions(SEDIMENT)
+# endif()
+
+# FLAG_23: ENABLE KALMAN FILTERS
+set(FVCOM_RRKF OFF CACHE BOOL "ENABLE KALMAN FILTERS")
+
+# if(FVCOM_RRKF)
+#   add_compile_definitions(RRKF)
+# endif()
+
+# FLAG_24: ENABLE One-D Mode with Biological Model
+set(FVCOM_ONE_D_MODEL OFF CACHE BOOL "ENABLE One-D Mode with Biological Model")
+
+# if(FVCOM_ONE_D_MODEL)
+#   add_compile_definitions(ONE_D_MODEL)
+# endif()
+
+# FLAG_25: ENABLE GENERAL BIOLOGICAL MODEL
+set(FVCOM_BioGen OFF CACHE BOOL "ENABLE GENERAL BIOLOGICAL MODEL")
+
+# if(FVCOM_BioGen)
+#   add_compile_definitions(BioGen)
+# endif()
+
+# FLAG_26: ENABLE Dynamic/Thermodynamic Ice 
+set(FVCOM_ICE OFF CACHE BOOL "ENABLE Dynamic/Thermodynamic Ice ")
+
+# if(FVCOM_ICE)
+#   add_compile_definitions(ICE)
+# endif()
+
+# FLAG_27: SELECT THE NET HEAT FLUX CALCULATION
+set(FVCOM_HEATFLUX "NONE" CACHE STRING "SELECT THE NET HEAT FLUX CALCULATION")
+
+set_property(
+  CACHE FVCOM_HEATFLUX
+  PROPERTY STRINGS
+  "NONE;HEATING_CALCULATED;HEATING_SOLAR"
+)
+
+# if(FVCOM_HEATFLUX EQUAL "HEATING_CALCULATED")
+#   add_compile_definitions(HEATING_CALCULATED)
+# elseif(FVCOM_HEATFLUX EQUAL "HEATING_SOLAR")
+#   add_compile_definitions(HEATING_SOLAR)
+# endif()
+
+# FLAG_28: ENABLE AIR_PRESSURE FROM SURFACE FORCING
+set(FVCOM_AIR_PRESSURE OFF CACHE BOOL "ENABLE AIR_PRESSURE FROM SURFACE FORCING")
+
+# if(FVCOM_AIR_PRESSURE)
+#   add_compile_definitions(AIR_PRESSURE)
+# endif()
+
+# FLAG_30: ENABLE NON-HYDROSTATIC MODEL
+set(FVCOM_NH OFF CACHE BOOL "ENABLE NON-HYDROSTATIC MODEL")
+
+# if(FVCOM_NH)
+#   add_compile_definitions(NH)
+# endif()
+
+# FLAG_31: ENABLE PARTICLE TRACKING
+set(FVCOM_LAG_PARTICLE OFF CACHE BOOL "ENABLE PARTICLE TRACKING")
+
+# if(FVCOM_LAG_PARTICLE)
+#   add_compile_definitions(LAG_PARTICLE)
+# endif()
+
+# FLAG_32: ENABLE WAVE-CURRENT INTERACTION
+set(FVCOM_WAVE_CURRENT_INTERACTION OFF CACHE BOOL "ENABLE WAVE-CURRENT INTERACTION")
+
+# if(FVCOM_WAVE_CURRENT_INTERACTION)
+#   add_compile_definitions(WAVE_CURRENT_INTERACTION)
+# endif()
+
+# FLAG_38: ENABLE THIN-DAM MODEL
+set(FVCOM_THIN_DAM OFF CACHE BOOL "ENABLE THIN-DAM MODEL")
+
+# if(FVCOM_THIN_DAM)
+#   add_compile_definitions(THIN_DAM)
+# endif()
+
+# FLAG_39: ENABLE PWP MIXED LAYER MODEL
+set(FVCOM_PWP OFF CACHE BOOL "ENABLE PWP MIXED LAYER MODEL")
+
+# if(FVCOM_PWP)
+#   add_compile_definitions(PWP)
+# endif()
+
+# FLAG_40: ENABLE VERTICAL ADVECTION LIMITER
+set(FVCOM_LIMITER_VER_ADV OFF CACHE BOOL "ENABLE VERTICAL ADVECTION LIMITER")
+
+# if(FVCOM_LIMITER_VER_ADV)
+#   add_compile_definitions(LIMITER_VER_ADV)
+# endif()
+
+# FLAG_41: ENABLE PETSC
+set(FVCOM_OLD_PETSC OFF CACHE BOOL "ENABLE PETSC")
+
+# if(FVCOM_OLD_PETSC)
+#   add_compile_definitions(OLD_PETSC)
+# endif()
+
+# FLAG_42: ENABLE SPECIAL PARTITION
+set(FVCOM_PARTITION_SPECIAL OFF CACHE BOOL "ENABLE SPECIAL PARTITION")
+
+# if(FVCOM_PARTITION_SPECIAL)
+#   add_compile_definitions(PARTITION_SPECIAL)
+# endif()
+
+# FLAG_45: ENABLE Vegetation Impact on FLows, Waves and Sediment
+set(FVCOM_VEGETATION OFF CACHE BOOL "ENABLE VEGETATION Impact on FLows, Waves and Sediment")
+
+# if(FVCOM_VEGETATION)
+#   add_compile_definitions(VEGETATION)
+# endif()
+
+# FLAG_80: ENABLE PIO OUTPUT
+set(FVCOM_PIO OFF CACHE BOOL "ENABLE PIO OUTPUT")
+
+# if(FVCOM_PIO)
+#   add_compile_definitions(PIO)
+# endif()
+
+# FLAG_81: GENERATING FVCOM LIBRARY FILE
+set(FVCOM_COUPLED OFF CACHE BOOL "GENERATING FVCOM LIBRARY FILE")
+
+# if(FVCOM_COUPLED)
+#   add_compile_definitions(FVCOM_COUPLED)
+# endif()
