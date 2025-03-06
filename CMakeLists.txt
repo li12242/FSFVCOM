@@ -13,18 +13,28 @@ endif()
 # Define the executable name
 set(MAIN_NAME fsfvcom)
 
-list( APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/ ${PROJECT_SOURCE_DIR}/cmake/modules )
+list(APPEND CMAKE_MODULE_PATH
+   ${PROJECT_SOURCE_DIR}/cmake/
+   ${PROJECT_SOURCE_DIR}/cmake/modules
+)
 
 # Use link paths as rpaths
-set( CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE )
-set( CMAKE_Fortran_PREPROCESS ON )
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+set(CMAKE_Fortran_PREPROCESS ON)
 
 # Set preprocess flags
-list( APPEND CMAKE_C_PREPROCESSOR_FLAGS -P -nostdinc -traditional )
+# this is only used for the x86_64 architecture
+# list(APPEND CMAKE_C_PREPROCESSOR_FLAGS -P -traditional -march=x86-64-v4)
 
+include(compiler_arch)
 
-file(GLOB_RECURSE sources src/*.c src/*.F)
-add_executable(fsfvcom ${sources})
+# maybe add solver selection here
+set(FSFVCOM_CORE "FVCOM" CACHE STRING "FSFVCOM_CORE")
+set_property(
+   CACHE FSFVCOM_CORE
+   PROPERTY STRINGS "FVCOM"
+)
 
-include( compiler_arch )
-include( fvcom_config )
+# include(fvcom_config)
+add_subdirectory(src)
+
