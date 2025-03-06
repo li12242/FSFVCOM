@@ -9,7 +9,6 @@ build*
 .vscode
 
 # files
-fvcom
 libfvcom.a
 *.mod
 *.o
