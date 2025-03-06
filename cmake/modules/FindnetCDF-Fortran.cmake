@@ -28,20 +28,12 @@ endif()
 
 # else
 # Use nf-config
-if(DEFINED FVCOM_EXTENAL_BINARY_PATH)
-  find_program(
-    NETCDF-FORTRAN_PROGRAM
-    nf-config
-    ${FVCOM_EXTENAL_BINARY_PATH}
-    QUIET
-  )
-else()
-  find_program(
-    NETCDF-FORTRAN_PROGRAM
-    nf-config
-    QUIET
-  )
-endif()
+find_program(
+  NETCDF-FORTRAN_PROGRAM
+  nf-config
+  ${FVCOM_EXTENAL_BINARY_PATH}
+  QUIET
+)
 
 if(${NETCDF-FORTRAN_PROGRAM} MATCHES "-NOTFOUND$")
   message(STATUS "No nf-config found")
